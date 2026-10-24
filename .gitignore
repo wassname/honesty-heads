@@ -1,3 +1,10 @@
 out/
+outputs/
+.venv
+.local/
+.env
+.env.*
+.pi/tasks/
+wandb/
 __pycache__/
 *.pyc

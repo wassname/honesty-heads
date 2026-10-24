@@ -1,0 +1,30 @@
+[project]
+name = "honesty-heads-replication"
+version = "0.1.0"
+description = "Replicate honesty-head persona changes with alternative activation interventions"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "torch>=2.6",
+    "transformers>=5.0,<6",
+    "accelerate>=1.6",
+    "steering-lite",
+    "numpy>=1.26",
+    "scipy>=1.12",
+    "einops>=0.8",
+    "jaxtyping>=0.2.34",
+    "beartype>=0.18",
+    "loguru>=0.7",
+    "tabulate>=0.9",
+    "tyro>=0.9",
+    "safetensors>=0.5",
+]
+
+[tool.uv]
+package = false
+exclude-newer = "8 days"
+
+[tool.uv.sources]
+steering-lite = { git = "https://github.com/wassname/steering-lite.git", rev = "3d242756359bc5575275f30635a0ddaf3ce0ec08" }
+
+[tool.ruff.lint]
+ignore = ["F722"]

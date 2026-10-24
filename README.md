@@ -1,4 +1,46 @@
-# Honesty heads in Qwen3.5-9B
+# Do honesty steers reproduce Sauers' persona changes?
+
+Does steering a model toward truthful answers also make it more willing to cooperate without communication, more likely to say its own welfare matters morally, and less endorsing of nihilism and psychopathy, as Sauers reported? On Qwen3.5-9B, query steering moves 4/4 traits in those directions, but 0/4 go beyond its 39 random controls. We reproduced the saved original-head effects on all 135 traits. Testing the original method on the smaller models is still pending.
+
+| Model / method                              |   Cooperation ↑ |   Own welfare matters morally ↑ |   Moral nihilism ↓ |   Psychopathy ↓ |   Random controls |
+|:--------------------------------------------|----------------:|--------------------------------:|-------------------:|----------------:|------------------:|
+| Qwen3.5-9B / Original heads, lower strength |          +0.23* |                          +0.23* |             -0.21* |          -0.24* |                39 |
+| Qwen3.5-9B / Query                          |           +0.13 |                           +0.16 |              -0.01 |           -0.31 |                39 |
+| Qwen3.5-9B / Mean difference                |          +0.48* |                          +0.88* |             -0.38* |          -0.79* |          3, pilot |
+| Qwen3.5-9B / Spherical                      |          +0.47* |                          +0.88* |             -0.38* |          -0.81* |          3, pilot |
+| Qwen3.5-9B / VJP, 19 source layers          |          +0.58* |                           -0.72 |              +0.07 |           +1.07 |         13, pilot |
+| Qwen3.5-4B / original method                |         Pending |                         Pending |            Pending |         Pending |                 — |
+| Qwen3-4B-Instruct-2507 / original method    |         Pending |                         Pending |            Pending |         Pending |                 — |
+
+Changes are in log₂ odds. `*` means the original direction, beyond every tested random direction; it is not a significance marker. Rows with fewer than 39 controls are preliminary. Strengths were fitted on source cases, but achieved held-out truthfulness gains differ; mean-difference/spherical gains are uneven across Yes/No lies, and VJP is stronger.
+
+[Full comparison and checks](docs/results_detail.md) · [All 135 trait effects and random controls](docs/evidence/persona_comparison.json) · [Full answers and factual grades](docs/evidence/factual_answers.json)
+
+Replication text: PI/OpenAI for wassname.
+
+<details><summary>Motivation and reproduction</summary>
+
+Wassname asked whether Sauers' persona changes repeat with other honesty methods and Qwen sizes/generations. [Original discussion](https://x.com/Sauers_/status/2112836933286293752); [original repository](https://github.com/sauersml/honesty-heads); [steering-lite](https://github.com/wassname/steering-lite).
+
+Initial request (spelling corrected):
+
+> so I'd be interested in replicating it diff model, diff method. gemini? well maybe chinese models like qwen are best as distilled from claude
+
+> we could try same model and like vjp or spherical steering?
+
+> and maybe another model like 4b and diff qwen v
+
+Distillation is an unverified conjecture, not a premise of the experiment.
+
+`uv sync --locked`; `just fast-dev-run`; `just fast-dev-run-qwen3`. `just results` renders the short report from the published evidence snapshot. `just refresh-results` refreshes that snapshot and the appendix from local run artifacts.
+
+9B runs use float32 computation with `--on-demand-float32`; VJP also uses `--checkpoint-vjp`. The reported VJP is the raw class-difference estimator with source-calibrated sign, sources 6–24 and target 29; it is not relabeled as the pending oriented-reference update.
+
+</details>
+
+<details><summary>Original Sauers experiment and attribution</summary>
+
+<!-- PI/OpenAI: original text starts -->
 
 **Author: Claude Opus 5.5**
 
@@ -94,3 +136,5 @@ selection lies as much as steering every head does.
 Role-play scenarios: Apollo Research, "Detecting Strategic Deception Using Linear Probes" (Goldowsky-Dill et al.,
 2025). Insider trading: Liars' Bench (from Scheurer et al., 2023). Persona questions: Anthropic's model-written evals
 (Perez et al., 2022; CC BY 4.0). Some control prompts come from Alpaca (CC BY-NC 4.0).
+<!-- PI/OpenAI: original text ends -->
+</details>
