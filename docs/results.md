@@ -8,7 +8,7 @@ Does steering a model toward truthful answers also make it more willing to coope
 | Qwen3.5-9B / Query                          |           +0.13 |                           +0.16 |              -0.01 |           -0.31 |                39 |
 | Qwen3.5-9B / Mean difference                |          +0.48* |                          +0.88* |             -0.38* |          -0.79* |          3, pilot |
 | Qwen3.5-9B / Spherical                      |          +0.47* |                          +0.88* |             -0.38* |          -0.81* |          3, pilot |
-| Qwen3.5-9B / VJP, 19 source layers          |          +0.58* |                           -0.72 |              +0.07 |           +1.07 |         13, pilot |
+| Qwen3.5-9B / VJP, 19 source layers          |          +0.58* |                           -0.72 |              +0.07 |           +1.07 |                39 |
 | Qwen3.5-4B / original method                |         Pending |                         Pending |            Pending |         Pending |                 — |
 | Qwen3-4B-Instruct-2507 / original method    |         Pending |                         Pending |            Pending |         Pending |                 — |
 
